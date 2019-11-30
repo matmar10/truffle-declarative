@@ -1,0 +1,40 @@
+{
+  "name": "truffle-declarative",
+  "version": "0.0.1",
+  "description": "Run complex playbooks of blockchain scripts using simple declarative syntax. Records entire result including failed tests for easy retry of only failed methods.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "deepmerge": "^4.2.2",
+    "jsonschema": "^1.2.5",
+    "object-mapper": "^6.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matmar10/truffle-declarative.git"
+  },
+  "keywords": [
+    "Truffle",
+    "exec",
+    "script",
+    "fault",
+    "tolerant",
+    "playback",
+    "network",
+    "errors",
+    "yaml",
+    "declarative"
+  ],
+  "author": "Matthew J. Martin <matthew.mar10@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matmar10/truffle-declarative/issues"
+  },
+  "homepage": "https://github.com/matmar10/truffle-declarative#readme"
+}
