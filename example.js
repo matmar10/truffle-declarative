@@ -1,77 +1,69 @@
 'use strict';
 
-const TruffleDeclarative = require('./');
-
-// const run = new TruffleDeclarative();
-
-const Command = require('./lib/command');
+const path = require('path');
+const Runner = require('./');
 
 const state = {
   $inputs: {
-    address1: '0x1f9c410d5562bb6590b8f891f2e26311f9a6ef8c',
-    gasPrice: 11e9
+    trustee: '0x1f9c410d5562bb6590b8f891f2e26311f9a6ef8c'
   },
   $outputs: {},
-  $contracts: {
-    SafeMathLib: { name: 'SafeMathLib' }
-  }
+  $contracts: {},
+  $deployed: {}
 };
 
-[{
-  description: 'Deploy a new version of SafeMathLib',
+const tasks = [{
+  description: 'Deploy a new SafeMathLib',
   contract: 'SafeMathLib',
   run: 'new',
   inputs: [{
-    from: '$inputs.address1',
-    gasPrice: '$inputs.gasPrice',
+    from: '$inputs.trustee'
   }],
-  outputs: ['safeMathLib', 'anotherThing', {
-    address: 'some.deep.nested.property'
-  }]
-  // outputs: {
-  //   address: '$outputs.safeMathLib'
-  // }
-// }, {
-//   description: 'Link IDRP to new SafeMathLib',
-//   contract: 'IDRP',
-//   run: 'link',
-//   inputs: ['$contracts.SafeMathLib', {
-//     from: '0x1f9c410d5562bb6590b8f891f2e26311f9a6ef8c',
-//   }],
-//   outputs: {
-//     address: 'idrp'
-//   }
-// }, {
-//   description: 'Deploy new CouponStorage',
-//   contract: 'CouponStorage',
-//   run: 'new',
-//   inputs: [{
-//     safeMathLib: '$outputs.safeMathLib',
-//     stableCoin: '$outputs.idrp',
-//     initialSupply: 1e30,
-//   }, {
-//     from: '0x1f9c410d5562bb6590b8f891f2e26311f9a6ef8c',
-//   }],
-//   outputs: {
-//     address: 'couponStorage'
-//   }
-// }, {
-//   description: 'Check CouponStorage balance for wallet #1.',
-//   contract: 'CouponStorage',
-//   at: '$outputs.couponStorage',
-//   run: 'balanceOf',
-//   inputs: ['0x1f9c410d5562bb6590b8f891f2e26311f9a6ef8c'],
-//   outputs: 'balanceOfWallet1'
-}].forEach(item => {
-  const c = new Command(item);
-  const inputs = c.getInputs(state);
-  c.writeOutputs({
-    name: 'SomeContract',
-    address: 'someaddress',
-    doMethod: function() {
-      console.log('Dodo!');
-    }
-  }, state);
-  console.log(state);
-  // console.log('Inputs: ', inputs);
+  outputs: '$deployed.safeMathLib'
+}, {
+  description: 'Link Token to SafeMathLib',
+  contract: 'Token',
+  run: 'link',
+  inputs: ['$deployed.safeMathLib']
+}, {
+  description: 'Link Profits to SafeMathLib',
+  contract: 'Profits',
+  run: 'link',
+  inputs: ['$deployed.safeMathLib']
+}, {
+  description: 'Deploy a new Token',
+  contract: 'Token',
+  run: 'new',
+  inputs: [{
+    fiatCurrencyCode: 'IDR',
+    tokenName: 'BMT Bina Ummah Mudaraba I',
+    tokenSymbol: 'BLS:BM1',
+    fiatMaximumAmount: 7000000000,
+    fiatMinimumInvestmentAmount: 10000000,
+    fiatPerEth: 1735653,
+    maturityLengthDays: 365,
+    fiatExchangeAddress: '0xc10c15ad37024f724e0c7efb3a284125efb69890',
+    managementAddress: '0x1f9c410d5562bb6590b8f891f2e26311f9a6ef8c',
+    operationsAddress: '0x739b62a44357115c483098e33eb119a388a793a1',
+    from: '0x1f9c410d5562bb6590b8f891f2e26311f9a6ef8c'
+  }, {
+    from: '$inputs.trustee',
+  }],
+  outputs: ['$deployed.token']
+}];
+
+const runner = new Runner({
+  networkName: 'development',
+  workingDirectory: path.join(__dirname, '/../../Blossom/smartsukuk-dual-mudaraba')
 });
+
+(async () => {
+  try {
+    const results = await runner.run(tasks, state);
+    // console.log('State:', state);
+    console.log('Results:', results);
+  } catch (err) {
+    console.error('Failed with error:', err);
+  }
+
+})();

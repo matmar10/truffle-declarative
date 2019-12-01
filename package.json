@@ -7,9 +7,13 @@
     "lib": "lib"
   },
   "dependencies": {
+    "@truffle/config": "^1.2.7",
+    "@truffle/contract": "^4.1.1",
+    "@truffle/provider": "^0.2.3",
     "deepmerge": "^4.2.2",
     "jsonschema": "^1.2.5",
-    "object-mapper": "^6.0.1"
+    "object-mapper": "^6.0.1",
+    "web3": "^1.2.4"
   },
   "devDependencies": {},
   "scripts": {
