@@ -10,10 +10,17 @@
     "@truffle/config": "^1.2.7",
     "@truffle/contract": "^4.1.1",
     "@truffle/provider": "^0.2.3",
+    "chalk": "^3.0.0",
     "deepmerge": "^4.2.2",
+    "js-yaml": "^3.13.1",
     "jsonschema": "^1.2.5",
+    "lodash.uniq": "^4.5.0",
+    "mkdirp": "^0.5.1",
     "object-mapper": "^6.0.1",
-    "web3": "^1.2.4"
+    "ora": "^4.0.3",
+    "web3": "^1.2.4",
+    "winston": "^3.2.1",
+    "winston-transport": "^4.3.0"
   },
   "devDependencies": {},
   "scripts": {

@@ -21,7 +21,9 @@ const tasks = [{
   inputs: [{
     from: '$inputs.trustee'
   }],
-  outputs: '$deployed.safeMathLib'
+  outputs: {
+    address: '$deployed.safeMathLib'
+  }
 }, {
   description: 'Link Token to SafeMathLib',
   contract: 'Token',
@@ -50,29 +52,40 @@ const tasks = [{
   }, {
     from: '$inputs.trustee',
   }],
-  outputs: ['$deployed.token']
+  outputs: {
+    address: '$deployed.token'
+  }
 }, {
   description: 'Depoy a new Profits contract',
   contract: 'Profits',
   run: 'new',
-  inputs: ['$deployed.token.address', {
+  inputs: ['$deployed.token', {
     from: '$inputs.trustee',
     gas: 3e6,
     gasPrice: 2e9
   }],
-  outputs: ['$deployed.profits']
+  outputs: {
+    address: '$deployed.profits'
+  }
 }, {
   description: 'Link Token to Profits',
   contract: 'Token',
-  at: '$deployed.token.address',
+  at: '$deployed.token',
   run: 'setProfitsContract',
-  inputs: ['$deployed.profits.address', {
+  inputs: ['$deployed.profits', {
+    from: '$inputs.trustee'
+  }]
+}, {
+  description: 'Sample failing task',
+  contract: 'Token',
+  at: '$deployed.token',
+  run: 'balanceOf',
+  inputs: ['$inputs.trustee', {
     from: '$inputs.trustee'
   }]
 }];
 
 const runner = new Runner({
-  networkName: 'development',
   workingDirectory: path.join(__dirname, '/../../Blossom/smartsukuk-dual-mudaraba')
 });
 
