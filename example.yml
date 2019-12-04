@@ -1,0 +1,69 @@
+---
+
+###
+# Deploys a V1 SmartSukuk
+##
+
+- description: Deploy a new SafeMathLib
+  contract: SafeMathLib
+  run: new
+  inputs:
+    - from: '$inputs.trustee'
+  outputs:
+    address: '$deployed.safeMathLib'
+
+- description: Link Token to SafeMathLib
+  contract: Token
+  run: link
+  inputs: '$contracts.SafeMathLib'
+
+- description: Link Profits to SafeMathLib
+  contract: Profits
+  run: link
+  inputs:
+    - '$contracts.SafeMathLib'
+
+- description: Deploy a new Token
+  contract: Token
+  run: new
+  inputs:
+    - fiatCurrencyCode: IDR
+      tokenName: BMT Bina Ummah Mudaraba I
+      tokenSymbol: 'BLS:BM1'
+      fiatMaximumAmount: 7000000000
+      fiatMinimumInvestmentAmount: 10000000
+      fiatPerEthAmount: 1735653
+      maturityLengthDays: 365
+      fiatExchangeAccount: '$inputs.exchange'
+      managementAccount: '$inputs.trustee'
+      operationsAccount: '$inputs.operations'
+    - from: '$inputs.trustee'
+  outputs:
+    address: '$deployed.token'
+
+- description: Depoy a new Profits contract
+  contract: Profits
+  run: new
+  inputs:
+    - '$deployed.token'
+    - from: '$inputs.trustee'
+      gas: 3e6
+      gasPrice: 2e9
+  outputs:
+    address: '$deployed.profits'
+
+- description: Link Token to Profits
+  contract: Token
+  at: '$deployed.token'
+  run: 'setProfitsContract'
+  inputs:
+    - '$deployed.profits'
+    - from: '$inputs.trustee'
+
+- description: Sample failing task
+  contract: Token
+  at: '$deployed.token'
+  run: balanceOf
+  inputs:
+    - asdfkanbshdfaksjdhf
+    - from: '$inputs.trustee'
