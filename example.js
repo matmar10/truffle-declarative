@@ -80,7 +80,7 @@ const tasks = [{
   contract: 'Token',
   at: '$deployed.token',
   run: 'balanceOf',
-  inputs: ['$inputs.trustee', {
+  inputs: ['asdfkanbshdfaksjdhf', {
     from: '$inputs.trustee'
   }]
 }];
