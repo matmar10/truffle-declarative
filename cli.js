@@ -60,6 +60,12 @@ yargs
             return ScriptReader.parseFile(filename);
           }
         },
+        delay: {
+          description: 'Delay between methods',
+          type: 'number',
+          default: 0,
+          hidden: true
+        },
         contracts: {
           description: 'Path to location of contract arficats (ABI) JSON files',
           type: 'string',
