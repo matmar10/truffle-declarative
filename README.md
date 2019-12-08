@@ -2,6 +2,17 @@
 
 Run complex playbooks of blockchain scripts using simple declarative syntax
 
+## Command Line
+
+```Bash
+
+./node_modules/.bin/truffle-play 
+
+```
+
+
+## Programmatic
+
 ```JavaScript
 
 const TruffleDeclarative = require('truffle-declarative');

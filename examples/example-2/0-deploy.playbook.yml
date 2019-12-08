@@ -2,7 +2,7 @@
   contract: SafeMathLib
   run: new
   inputs:
-    - from: $inputs.trustee
+    - from: $inputs.managementAccount
   outputs:
     address: $deployed.safeMathLib
 - description: Link Token to SafeMathLib
@@ -19,17 +19,17 @@
   contract: Token
   run: new
   inputs:
-    - fiatCurrencyCode: IDR
-      tokenName: BMT Bina Ummah Mudaraba I
-      tokenSymbol: 'BLS:BM1'
-      fiatMaximumAmount: 7000000000
-      fiatMinimumInvestmentAmount: 10000000
-      fiatPerEthAmount: 1735653
-      maturityLengthDays: 365
-      fiatExchangeAccount: $inputs.exchange
-      managementAccount: $inputs.trustee
-      operationsAccount: $inputs.operations
-    - from: $inputs.trustee
+    - fiatCurrencyCode: $inputs.fiatCurrencyCode
+      tokenName: $inputs.tokenName
+      tokenSymbol: $inputs.tokenSymbol
+      fiatMaximumAmount: $inputs.fiatMaximumAmount
+      fiatMinimumInvestmentAmount: $inputs.fiatMinimumInvestmentAmount
+      fiatPerEthAmount: $inputs.fiatPerEthAmount
+      maturityLengthDays: $inputs.maturityLengthDays
+      fiatExchangeAccount: $inputs.fiatExchangeAccount
+      managementAccount: $inputs.managementAccount
+      operationsAccount: $inputs.operationsAccount
+    - from: $inputs.managementAccount
   outputs:
     address: $deployed.token
 - description: Depoy a new Profits contract
@@ -37,7 +37,7 @@
   run: new
   inputs:
     - $deployed.token
-    - from: $inputs.trustee
+    - from: $inputs.managementAccount
       gas: 3000000
       gasPrice: 2000000000
   outputs:
@@ -48,12 +48,4 @@
   run: setProfitsContract
   inputs:
     - $deployed.profits
-    - from: $inputs.trustee
-- description: Sample failing task
-  contract: Token
-  at: $deployed.token
-  run: balanceOf
-  inputs:
-    - asdfkanbshdfaksjdhf
-    - from: $inputs.trustee
-
+    - from: $inputs.managementAccount

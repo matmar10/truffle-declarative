@@ -10,6 +10,9 @@ const Runner = require('./');
 const ScriptReader = require('./lib/script-reader');
 
 function coerceToRelative(arg) {
+  if (Array.isArray(arg)) {
+    return arg.map(val => coerceToRelative(val));
+  }
   return path.isAbsolute(arg) ?
     arg : path.join(__dirname, arg);
 }
@@ -52,12 +55,13 @@ yargs
           default: true,
           type: 'boolean'
         },
-        inputs: {
+        input: {
           description: 'Path to a file that contains inputs.',
+          alias: ['inputs', 'i'],
           type: 'string',
           coerce: function(arg) {
-            const filename = coerceToRelative(arg);
-            return ScriptReader.parseFile(filename);
+            const filenames = coerceToRelative(arg);
+            return ScriptReader.parseFiles(filenames);
           }
         },
         delay: {

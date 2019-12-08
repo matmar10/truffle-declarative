@@ -1,0 +1,51 @@
+- description: Deploy a new SafeMathLib
+  contract: SafeMathLib
+  run: new
+  inputs:
+    - from: $inputs.trustee
+  outputs:
+    address: $deployed.safeMathLib
+- description: Link Token to SafeMathLib
+  contract: Token
+  run: link
+  inputs:
+    - $contracts.SafeMathLib
+- description: Link Profits to SafeMathLib
+  contract: Profits
+  run: link
+  inputs:
+    - $contracts.SafeMathLib
+- description: Deploy a new Token
+  contract: Token
+  run: new
+  inputs:
+    - fiatCurrencyCode: $inputs.fiatCurrencyCode
+      tokenName: $inputs.tokenName
+      tokenSymbol: $inputs.tokenSymbol
+      fiatMaximumAmount: $inputs.fiatMaximumAmount
+      fiatMinimumInvestmentAmount: $inputs.fiatMinimumInvestmentAmount
+      fiatPerEthAmount: $inputs.fiatPerEthAmount
+      maturityLengthDays: $inputs.maturityLengthDays
+      fiatExchangeAccount: $inputs.exchange
+      managementAccount: $inputs.trustee
+      operationsAccount: $inputs.operations
+    - from: $inputs.trustee
+  outputs:
+    address: $deployed.token
+- description: Depoy a new Profits contract
+  contract: Profits
+  run: new
+  inputs:
+    - $deployed.token
+    - from: $inputs.trustee
+      gas: 3000000
+      gasPrice: 2000000000
+  outputs:
+    address: $deployed.profits
+- description: Link Token to Profits
+  contract: Token
+  at: $deployed.token
+  run: setProfitsContract
+  inputs:
+    - $deployed.profits
+    - from: $inputs.trustee

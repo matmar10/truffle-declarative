@@ -1,0 +1,18 @@
+
+- description: Make investments for all specified investors
+  for: $inputs.investors
+  each:
+    - contract: Token
+      at: $deployed.token
+      run: setInvestorWhitelist
+      inputs:
+        - addr: $item.account
+          value: true
+        - from: $inputs.managementAccount
+
+    - contract: Token
+      at: $deployed.token
+      run: sendTransaction
+      inputs:
+        - from: $item.account
+          value: $item.amount
