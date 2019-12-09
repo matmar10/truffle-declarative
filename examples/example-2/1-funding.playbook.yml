@@ -1,5 +1,5 @@
 
-- description: Make investments for all specified investors
+- description: Make investments for all investors
   for: $inputs.investors
   each:
     - contract: Token
@@ -16,3 +16,11 @@
       inputs:
         - from: $item.account
           value: $item.amount
+
+- description: Mark sukuk as closed to new investment
+  contract: Token
+  at: $deployed.token
+  run: finalizeFunding
+  inputs:
+    - $inputs.fiatPerEthAmount
+    - from: $inputs.managementAccount

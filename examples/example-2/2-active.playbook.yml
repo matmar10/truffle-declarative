@@ -1,0 +1,28 @@
+
+- description: Whitelist the exchange account to pay profits
+  contract: Token
+  at: $deployed.token
+  run: setDividendPayerWhitelist
+  inputs:
+    - addr: $inputs.fiatExchangeAccount
+      value: true
+    - from: $inputs.managementAccount
+
+- description: Run entire timeline of profit payments
+  for: $inputs.dividendAmounts
+  each:
+    - contract: Token
+      at: $deployed.token
+      run: payDividend
+      inputs:
+        - newExchangeRate: $inputs.fiatPerEthAmount
+        - value: $item
+          from: $inputs.fiatExchangeAccount
+
+- description: Mark as matured
+  contract: Token
+  at: $deployed.token
+  run: setMatured
+  inputs:
+    - newExchangeRate: $inputs.fiatPerEthAmount
+    - from: $inputs.managementAccount
