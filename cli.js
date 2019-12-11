@@ -70,6 +70,23 @@ yargs
           default: 0,
           hidden: true
         },
+        dumpState: {
+          description: 'Whether to dump state upon finish',
+          type: 'boolean',
+          default: false,
+          implies: ['dumpStatePath']
+        },
+        dumpStatePath: {
+          description: 'An object map to transform the state when dumping',
+          type: 'array',
+          default: ['$deployed'],
+          hidden: true
+        },
+        dumpStateFilename: {
+          description: 'Where to dump the state upon finish',
+          type: 'string',
+          hidden: true
+        },
         contracts: {
           description: 'Path to location of contract arficats (ABI) JSON files',
           type: 'string',
