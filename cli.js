@@ -77,7 +77,7 @@ yargs
           implies: ['dumpStatePath']
         },
         dumpStatePath: {
-          description: 'An object map to transform the state when dumping',
+          description: 'A list of paths that should be dumped.',
           type: 'array',
           default: ['$deployed'],
           hidden: true
