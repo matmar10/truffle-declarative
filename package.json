@@ -27,8 +27,11 @@
     "winston-transport": "^4.3.0",
     "yargs": "^15.0.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "release-it": "^12.4.3"
+  },
   "scripts": {
+    "release": "./node_modules/.bin/release-it",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -52,5 +55,21 @@
   "bugs": {
     "url": "https://github.com/matmar10/truffle-declarative/issues"
   },
-  "homepage": "https://github.com/matmar10/truffle-declarative#readme"
+  "homepage": "https://github.com/matmar10/truffle-declarative#readme",
+  "release-it": {
+    "non-interactive": true,
+    "git": {
+      "commit": true,
+      "push": true,
+      "requireCleanWorkingDir": false,
+      "tag": true
+    },
+    "github": {
+      "release": true
+    },
+    "npm": {
+      "private": true,
+      "publish": false
+    }
+  }
 }
