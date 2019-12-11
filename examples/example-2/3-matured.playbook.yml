@@ -1,0 +1,29 @@
+
+- description: Repay the principal capital
+  contract: Token
+  at: $deployed.token
+  run: payDividend
+  inputs:
+    - newExchangeRate: $inputs.fiatPerEthAmount
+    - from: $inputs.fiatExchangeAccount
+      value: $inputs.repaymentAmount
+
+- description: Ensure operations can make payments
+  contract: Token
+  at: $deployed.token
+  run: setDividendPayerWhitelist
+  inputs:
+    - addr: $inputs.operationsAccount
+      value: true
+    - from: $inputs.managementAccount
+
+- description: Distribute payments to all investors
+  for: $inputs.investors
+  each:
+    - description: Distribute payment to investor
+      contract: Profits
+      at: $deployed.profits
+      run: distributePayments
+      inputs:
+        - beneficiary: $item.account
+        - from: $inputs.operationsAccount
