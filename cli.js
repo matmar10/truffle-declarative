@@ -9,13 +9,7 @@ const yargs = require('yargs');
 const Runner = require('./');
 const ScriptReader = require('./lib/script-reader');
 
-function coerceToRelative(arg) {
-  if (Array.isArray(arg)) {
-    return arg.map(val => coerceToRelative(val));
-  }
-  return path.isAbsolute(arg) ?
-    arg : path.join(__dirname, arg);
-}
+const defaultWorkingDirectory = path.join(__dirname, '/../../');
 
 yargs
   .usage("$0 <path..>")
@@ -32,7 +26,8 @@ yargs
           alias: 'd',
           description: 'Location of truffle project.',
           type: 'string',
-          coerce: coerceToRelative
+          coerce: (arg) => ScriptReader.coerceRelativePath(arg, __dirname),
+          default: defaultWorkingDirectory
         },
         state: {
           description: 'Values to pass to the state which may be referenced in scripts.',
@@ -58,11 +53,7 @@ yargs
         input: {
           description: 'Path to a file that contains inputs.',
           alias: ['inputs', 'i'],
-          type: 'string',
-          coerce: function(arg) {
-            const filenames = coerceToRelative(arg);
-            return ScriptReader.parseFiles(filenames);
-          }
+          type: 'string'
         },
         delay: {
           description: 'Delay between methods',
@@ -102,10 +93,22 @@ yargs
     },
     handler: async (argv) => {
       try {
+        argv.scriptDir = __dirname;
+
         const runner = new Runner(argv);
+
+        // ensure relative paths of input files coerced into absolute
+        // using the workingDirectory
+        if (argv.inputs) {
+          argv.inputs = runner.scriptReader.merge(argv.inputs);
+        }
+
+        // add inputs to the initial state
         const state = merge(argv.state, {
           $inputs: argv.inputs || {}
         });
+
+        // run list of script files found at specified path(s)
         await runner.read(argv.path, state);
       } catch (err) {
         console.error('Failed with error:', err);
