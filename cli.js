@@ -93,7 +93,7 @@ yargs
     },
     handler: async (argv) => {
       try {
-        argv.scriptDir = __dirname;
+        argv.scriptDirectory = __dirname;
 
         const runner = new Runner(argv);
 
