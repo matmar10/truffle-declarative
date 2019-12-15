@@ -65,7 +65,7 @@ const runner = new Runner({
   try {
     const results = await runner.read([
       'examples/example-2/0-deploy.playbook.yml',
-      {
+      [{
         "description": "Make investments for all investors",
         "for": "$inputs.investors",
         "each": [
@@ -95,7 +95,13 @@ const runner = new Runner({
             ]
           }
         ]
-      }
+      }, {
+        "description": "Do something",
+        "contract": "Token",
+        "run": "balanceOf",
+        "at": "$deployed.token",
+        "inputs": ["$inputs.managementAccount"]
+      }]
     ], state);
   } catch (err) {
     console.error('Failed with error:', err);
