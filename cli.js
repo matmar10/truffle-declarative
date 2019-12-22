@@ -103,10 +103,16 @@ yargs
           argv.inputs = runner.scriptReader.merge(argv.inputs);
         }
 
+        const $inputs = argv.inputs || {};
+        // deployed is a special case
+        // as this could be output from a state dump
+        const $deployed = $inputs.$deployed || {};
+
         // add inputs to the initial state
-        const state = merge(argv.state, {
-          $inputs: argv.inputs || {}
-        });
+        const state = merge({
+          $deployed,
+          $inputs
+        }, argv.state);
 
         // run list of script files found at specified path(s)
         await runner.read(argv.path, state);
