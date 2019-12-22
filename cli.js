@@ -61,19 +61,19 @@ yargs
           default: 0,
           hidden: true
         },
-        dumpState: {
+        dump: {
           description: 'Whether to dump state upon finish',
           type: 'boolean',
           default: false,
-          implies: ['dumpStatePath']
+          implies: ['dumpPath']
         },
-        dumpStatePath: {
+        dumpPath: {
           description: 'A list of paths that should be dumped.',
           type: 'array',
           default: ['$deployed'],
           hidden: true
         },
-        dumpStateFilename: {
+        dumpFilename: {
           description: 'Where to dump the state upon finish',
           type: 'string',
           hidden: true
