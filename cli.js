@@ -112,7 +112,7 @@ yargs
         const state = merge({
           $deployed,
           $inputs
-        }, argv.state);
+        }, argv.state || {});
 
         // run list of script files found at specified path(s)
         await runner.read(argv.path, state);
