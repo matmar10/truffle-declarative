@@ -1,6 +1,6 @@
 {
   "name": "truffle-declarative",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Run complex playbooks of blockchain scripts using simple declarative syntax. Records entire result including failed tests for easy retry of only failed methods.",
   "main": "index.js",
   "bin": {
