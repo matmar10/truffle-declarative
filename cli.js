@@ -55,6 +55,16 @@ yargs
           alias: ['inputs', 'i'],
           type: 'string'
         },
+        debug: {
+          description: 'Write inputs and outputs to console',
+          type: 'boolean'
+        },
+        debugInspectDepth: {
+          description: 'How deep to print objects (util.inspect depth)',
+          type: 'number',
+          default: 5,
+          hidden: true
+        },
         delay: {
           description: 'Delay between methods',
           type: 'number',
