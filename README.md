@@ -6,7 +6,7 @@ Run complex playbooks of blockchain scripts using simple declarative syntax
 
 ```Bash
 
-./node_modules/.bin/truffle-play 
+./node_modules/.bin/truffle-play
 
 ```
 
@@ -65,4 +65,24 @@ const results = await run([{
   inputs: ['0x1f9c410d5562bb6590b8f891f2e26311f9a6ef8c'],
   outputs: 'balanceOfWallet1'
 }]);
+```
+
+## special
+
+Run special utils, such as `truffle-object-mapper`:
+
+```javascript
+
+const TruffleDeclarative = require('truffle-declarative');
+const run = new TruffleDeclarative({
+  map: path.join(__dirname, 'map.js'),
+});
+
+const results = await run([{
+  description: 'Dump the current contract',
+  contract: 'CouponStorage',
+  at: '0x1f9c410d5562bb6590b8f891f2e26311f9a6ef8c',
+  run: 'util.map'
+}]);
+
 ```

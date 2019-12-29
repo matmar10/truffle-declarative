@@ -99,6 +99,12 @@ yargs
           type: 'boolean',
           default: true,
         },
+        mapping: {
+          description: 'Path to a definition of a map to be used by truffle-object-mapper for calls to util.map',
+          hidden: false,
+          type: 'string',
+          default: 'mapping.js'
+        }
       });
     },
     handler: async (argv) => {

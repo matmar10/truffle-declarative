@@ -22,6 +22,7 @@
     "object-mapper": "^6.0.1",
     "ora": "^4.0.3",
     "traverse": "^0.6.6",
+    "truffle-object-mapper": "^1.2.0",
     "web3": "^1.2.4",
     "winston": "^3.2.1",
     "winston-transport": "^4.3.0",
