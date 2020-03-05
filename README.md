@@ -86,3 +86,10 @@ const results = await run([{
 }]);
 
 ```
+
+# TODO
+
+- Improve docs
+- Add pretty HTML docs
+- Allow for/each on path
+
