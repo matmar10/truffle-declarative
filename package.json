@@ -13,16 +13,16 @@
     "@truffle/config": "^1.2.7",
     "@truffle/contract": "^4.1.1",
     "@truffle/provider": "^0.2.3",
+    "ajv": "^6.12.2",
     "chalk": "^3.0.0",
     "deepmerge": "^4.2.2",
     "js-yaml": "^3.13.1",
-    "jsonschema": "^1.2.5",
     "lodash.uniq": "^4.5.0",
     "mkdirp": "^0.5.1",
     "object-mapper": "^6.0.1",
     "ora": "^4.0.3",
     "traverse": "^0.6.6",
-    "truffle-object-mapper": "^1.2.0",
+    "truffle-object-mapper": "^1.4.0",
     "web3": "^1.2.4",
     "winston": "^3.2.1",
     "winston-transport": "^4.3.0",
@@ -33,7 +33,8 @@
   },
   "scripts": {
     "release": "./node_modules/.bin/release-it",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "run-with-testrpc -d -m \"myth like bonus scare over problem client lizard pioneer submit female collect\" 'npm run test:build && mocha test/**/*.spec.js'",
+    "test:build": "cd test && truffle build && truffle deploy"
   },
   "repository": {
     "type": "git",

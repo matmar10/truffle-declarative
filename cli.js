@@ -116,7 +116,11 @@ yargs
         // ensure relative paths of input files coerced into absolute
         // using the workingDirectory
         if (argv.inputs) {
-          argv.inputs = runner.scriptReader.merge(argv.inputs);
+          const inputsPath = argv.inputs;
+          argv.inputs = runner.scriptReader.merge(inputsPath);
+          if (!Object.keys(argv.inputs).length) {
+            console.warn(`No inputs found from ${inputsPath}`);
+          }
         }
 
         const $inputs = argv.inputs || {};
@@ -134,6 +138,7 @@ yargs
         await runner.read(argv.path, state);
       } catch (err) {
         console.error('Failed with error:', err);
+        console.error(err.stack);
       }
     }
   })
