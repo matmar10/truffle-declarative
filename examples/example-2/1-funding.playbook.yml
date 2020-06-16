@@ -24,3 +24,15 @@
   inputs:
     - $inputs.fiatPerEthAmount
     - from: $inputs.managementAccount
+
+- description: Get balance of tokens held by custodian
+  contract: CouponStorage
+  at: $deployed.couponStorage
+  run: balanceOf
+  inputs:
+    - _owner: $inputs.custodian
+    - from: $inputs.custodian
+      gasPrice: $inputs.gasPrice
+  outputs:
+    output: $inputs.custodianBalance
+
