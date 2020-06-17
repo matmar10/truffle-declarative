@@ -13,10 +13,12 @@ contract MetaCoin {
 	event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
 	bytes32 public name;
+	uint8 public version;
 
-	constructor(bytes32 _name, uint _balance) public {
+	constructor(bytes32 _name, uint _balance, uint8 _version) public {
 		name = _name;
 		balances[tx.origin] = _balance;
+		version = _version;
 	}
 
 	function sendCoin(address receiver, uint amount) public returns(bool sufficient) {

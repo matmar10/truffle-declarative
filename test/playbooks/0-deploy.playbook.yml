@@ -33,6 +33,7 @@
   inputs:
     - name: $inputs.name
       balance: $inputs.balance
+      version: $inputs.version
     - from: $inputs.address0
   outputs:
     address: $deployed.metacoin

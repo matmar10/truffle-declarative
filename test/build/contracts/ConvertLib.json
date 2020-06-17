@@ -5,10 +5,12 @@
       "constant": true,
       "inputs": [
         {
+          "internalType": "uint256",
           "name": "amount",
           "type": "uint256"
         },
         {
+          "internalType": "uint256",
           "name": "conversionRate",
           "type": "uint256"
         }
@@ -16,6 +18,7 @@
       "name": "convert",
       "outputs": [
         {
+          "internalType": "uint256",
           "name": "convertedAmount",
           "type": "uint256"
         }
@@ -25,9 +28,9 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.8+commit.23d335f2\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"name\":\"amount\",\"type\":\"uint256\"},{\"name\":\"conversionRate\",\"type\":\"uint256\"}],\"name\":\"convert\",\"outputs\":[{\"name\":\"convertedAmount\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/matmar10/Projects/OpenSource/truffle-declarative/test/contracts/ConvertLib.sol\":\"ConvertLib\"},\"evmVersion\":\"petersburg\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/matmar10/Projects/OpenSource/truffle-declarative/test/contracts/ConvertLib.sol\":{\"keccak256\":\"0xfde82bd17946d3836267b249a3805d7376587f40b08aecd17764223217a3c048\",\"urls\":[\"bzzr://d8298df0e956d55c4a44f538e419dcabcb55af6ad19a3b212c039a2794826c1a\"]}},\"version\":1}",
-  "bytecode": "0x60ba610025600b82828239805160001a60731461001857fe5b30600052607381538281f3fe730000000000000000000000000000000000000000301460806040526004361060335760003560e01c806396e4ee3d146038575b600080fd5b606b60048036036040811015604c57600080fd5b8101908080359060200190929190803590602001909291905050506081565b6040518082815260200191505060405180910390f35b600081830290509291505056fea165627a7a723058206f1f9b23316d59614361688a6f4320658817b6abbb3db9d4c6499f2d927c48850029",
-  "deployedBytecode": "0x730000000000000000000000000000000000000000301460806040526004361060335760003560e01c806396e4ee3d146038575b600080fd5b606b60048036036040811015604c57600080fd5b8101908080359060200190929190803590602001909291905050506081565b6040518082815260200191505060405180910390f35b600081830290509291505056fea165627a7a723058206f1f9b23316d59614361688a6f4320658817b6abbb3db9d4c6499f2d927c48850029",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.16+commit.9c3226ce\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":true,\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"conversionRate\",\"type\":\"uint256\"}],\"name\":\"convert\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"convertedAmount\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/matmar10/Projects/OpenSource/truffle-declarative/test/contracts/ConvertLib.sol\":\"ConvertLib\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/matmar10/Projects/OpenSource/truffle-declarative/test/contracts/ConvertLib.sol\":{\"keccak256\":\"0xfde82bd17946d3836267b249a3805d7376587f40b08aecd17764223217a3c048\",\"urls\":[\"bzz-raw://768c78ccfa036bc0cad39c385961ad4aba48327f9752aa8992d36c4dc2a7384f\",\"dweb:/ipfs/QmQRjB1rSC8C38rX55ALgNosgsusHK71Tf7r4xHtqPuSd7\"]}},\"version\":1}",
+  "bytecode": "0x60c3610025600b82828239805160001a60731461001857fe5b30600052607381538281f3fe730000000000000000000000000000000000000000301460806040526004361060335760003560e01c806396e4ee3d146038575b600080fd5b606b60048036036040811015604c57600080fd5b8101908080359060200190929190803590602001909291905050506081565b6040518082815260200191505060405180910390f35b600081830290509291505056fea265627a7a7231582080025dbe60ad1f28057afca11ac2e6aba542707700f6be0b5f48a80812f7a2b464736f6c63430005100032",
+  "deployedBytecode": "0x730000000000000000000000000000000000000000301460806040526004361060335760003560e01c806396e4ee3d146038575b600080fd5b606b60048036036040811015604c57600080fd5b8101908080359060200190929190803590602001909291905050506081565b6040518082815260200191505060405180910390f35b600081830290509291505056fea265627a7a7231582080025dbe60ad1f28057afca11ac2e6aba542707700f6be0b5f48a80812f7a2b464736f6c63430005100032",
   "sourceMap": "34:155:0:-;;132:2:-1;166:7;155:9;146:7;137:37;255:7;249:14;246:1;241:23;235:4;232:33;222:2;;269:9;222:2;293:9;290:1;283:20;323:4;314:7;306:22;347:7;338;331:24",
   "deployedSourceMap": "34:155:0:-;;;;;;;;;;;;;;;;;;;;;;;;55:132;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;55:132:0;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;126:20;169:14;160:6;:23;153:30;;55:132;;;;:::o",
   "source": "pragma solidity >=0.4.25 <0.7.0;\n\nlibrary ConvertLib{\n\tfunction convert(uint amount,uint conversionRate) public pure returns (uint convertedAmount)\n\t{\n\t\treturn amount * conversionRate;\n\t}\n}\n",
@@ -450,7 +453,7 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.5.8+commit.23d335f2.Emscripten.clang"
+    "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
   },
   "networks": {
     "1592241773918": {
@@ -460,8 +463,8 @@
       "transactionHash": "0x64ae424aaa9553fecfeadd31539a93a6462a81bc9bdc3e16be916b11ebe44386"
     }
   },
-  "schemaVersion": "3.0.16",
-  "updatedAt": "2020-06-15T17:25:13.028Z",
+  "schemaVersion": "3.2.0",
+  "updatedAt": "2020-06-17T18:48:21.876Z",
   "devdoc": {
     "methods": {}
   },

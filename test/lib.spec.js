@@ -39,17 +39,17 @@ describe('lib', function () {
   it('runs deploy scripts with linking', function() {
     chai.expect(results[0][0]).to.deep.include({
       address: '0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab',
-      transactionHash: '0xd7bc5dc32543a0a6064954f96435a29191fb5dcd6324ff57862ab1aa3b2aa69a',
+      transactionHash: '0xfe7e5d6fc8c281606f40f70837dc136704ace71496dce852bc6d93dcce3bcb48',
     });
     chai.expect(results[0][1]).to.be.undefined;
     chai.expect(results[0][2]).to.deep.include({
       address: '0x5b1869D9A4C187F2EAa108f3062412ecf0526b24',
-      transactionHash: '0xeb78e9989818b34486c63920b5509146a4acd08e42b2a40f05130a56a8eabf90',
+      transactionHash: '0x13577c27c01a67f2b3bde64f7a0913524a112fb0148a2773a93ac1c8830f1edf',
     });
     chai.expect(results[0][3]).to.be.undefined;
     chai.expect(results[0][4]).to.deep.include({
       address: '0xCfEB869F69431e42cdB54A4F4f105C19C080A601',
-      transactionHash: '0xef60815c5bd48d46763d6278f48b1dee662e585be268682a33772405809afae5',
+      transactionHash: '0xca05a744bf8515a1618936dc689a988c22e6f056af6289d7e6f2934024f65ecb',
     });
   });
 
@@ -157,5 +157,14 @@ describe('lib', function () {
     }]);
     await chai.expect(results[0][0]).to.be.a('string').that.equals('2000');
     await chai.expect(results[1][0]).to.be.a.bignumber.that.equals(new BN('1000'));
+  });
+
+  it('applies type mapping', async function() {
+    const results = await runner.read([{
+      contract: 'MetaCoin',
+      run: 'version',
+      at: deployedAddress,
+    }]);
+    await chai.expect(results[0][0]).to.be.a('string').that.equals(String(inputs.version));
   });
 });
