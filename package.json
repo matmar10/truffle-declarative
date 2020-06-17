@@ -29,12 +29,19 @@
     "yargs": "^15.0.2"
   },
   "devDependencies": {
-    "release-it": "^12.4.3"
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-bn": "^0.2.1",
+    "mocha": "^8.0.1",
+    "release-it": "^12.4.3",
+    "run-with-testrpc": "^0.3.1",
+    "truffle": "^5.1.30"
   },
   "scripts": {
     "release": "./node_modules/.bin/release-it",
-    "test": "run-with-testrpc -d -m \"myth like bonus scare over problem client lizard pioneer submit female collect\" 'npm run test:build && mocha test/**/*.spec.js'",
-    "test:build": "cd test && truffle build && truffle deploy"
+    "test:cli": "run-with-testrpc -d -m \"myth like bonus scare over problem client lizard pioneer submit female collect\" 'npm run test:build && npm run test:fixtures && mocha test/cli.spec.js'",
+    "test:fixtures": "./cli.js test/playbooks -d test -i test/inputs.yml",
+    "test:build": "cd test && truffle build"
   },
   "repository": {
     "type": "git",

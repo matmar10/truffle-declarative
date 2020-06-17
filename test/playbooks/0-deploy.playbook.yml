@@ -3,7 +3,7 @@
   contract: Migrations
   run: new
   inputs:
-    - from: $inputs.owner
+    - from: $inputs.address0
   outputs:
     address: $deployed.migrations
 
@@ -17,7 +17,7 @@
   contract: ConvertLib
   run: new
   inputs:
-    - from: $inputs.owner
+    - from: $inputs.address0
   outputs:
     address: $deployed.convertLib
 
@@ -31,6 +31,8 @@
   contract: MetaCoin
   run: new
   inputs:
-    - from: $inputs.owner
+    - name: $inputs.name
+      balance: $inputs.balance
+    - from: $inputs.address0
   outputs:
     address: $deployed.metacoin

@@ -1,0 +1,12 @@
+
+- description: Send to all
+  for: $inputs.distributions
+  each:
+    - description: Send to address
+      contract: MetaCoin
+      at: $deployed.metacoin
+      run: sendCoin
+      inputs:
+        - receiver: $item.address
+          amount: $item.amount
+        - from: $inputs.address0

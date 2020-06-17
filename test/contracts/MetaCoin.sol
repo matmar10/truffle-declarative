@@ -10,15 +10,13 @@ import "./ConvertLib.sol";
 contract MetaCoin {
 	mapping (address => uint) balances;
 
-	uint public uintExample = 100;
-	int public intExample = -200;
-	bytes32 public bytes32Example = 'bytes 32 example';
-	address constant public addressExample = 0xAb5801a7D398351b8bE11C439e05C5B3259aeC9B;
-
 	event Transfer(address indexed _from, address indexed _to, uint256 _value);
 
-	constructor() public {
-		balances[tx.origin] = 10000;
+	bytes32 public name;
+
+	constructor(bytes32 _name, uint _balance) public {
+		name = _name;
+		balances[tx.origin] = _balance;
 	}
 
 	function sendCoin(address receiver, uint amount) public returns(bool sufficient) {
@@ -29,11 +27,11 @@ contract MetaCoin {
 		return true;
 	}
 
-	function getBalanceInEth(address addr) public view returns(uint){
-		return ConvertLib.convert(getBalance(addr),2);
+	function getBalanceInEth(address holder) public view returns(uint){
+		return ConvertLib.convert(getBalance(holder),2);
 	}
 
-	function getBalance(address addr) public view returns(uint) {
-		return balances[addr];
+	function getBalance(address holder) public view returns(uint) {
+		return balances[holder];
 	}
 }
