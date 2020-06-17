@@ -100,7 +100,8 @@ const runner = new Runner({
         "contract": "Token",
         "run": "balanceOf",
         "at": "$deployed.token",
-        "inputs": ["$inputs.managementAccount"]
+        "inputs": ["$inputs.managementAccount"],
+        "outputs": ["$inputs.balanceInvestor"]
       }]
     ], state);
   } catch (err) {

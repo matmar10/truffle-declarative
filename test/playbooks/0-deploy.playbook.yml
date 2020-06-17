@@ -1,0 +1,38 @@
+
+- description: Deploy a new Migrations
+  contract: Migrations
+  run: new
+  inputs:
+    - from: $inputs.address0
+  outputs:
+    address: $deployed.migrations
+
+- description: Link MetaCoin to Migrations
+  contract: MetaCoin
+  run: link
+  inputs:
+    - $contracts.Migrations
+
+- description: Deploy a new ConvertLib
+  contract: ConvertLib
+  run: new
+  inputs:
+    - from: $inputs.address0
+  outputs:
+    address: $deployed.convertLib
+
+- description: Link MetaCoin to ConvertLib
+  contract: MetaCoin
+  run: link
+  inputs:
+    - $contracts.ConvertLib
+
+- description: Deploy a new MetaCoin
+  contract: MetaCoin
+  run: new
+  inputs:
+    - name: $inputs.name
+      balance: $inputs.balance
+    - from: $inputs.address0
+  outputs:
+    address: $deployed.metacoin

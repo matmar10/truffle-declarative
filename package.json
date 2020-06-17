@@ -13,27 +13,37 @@
     "@truffle/config": "^1.2.7",
     "@truffle/contract": "^4.1.1",
     "@truffle/provider": "^0.2.3",
+    "ajv": "^6.12.2",
     "chalk": "^3.0.0",
     "deepmerge": "^4.2.2",
     "js-yaml": "^3.13.1",
-    "jsonschema": "^1.2.5",
     "lodash.uniq": "^4.5.0",
     "mkdirp": "^0.5.1",
     "object-mapper": "^6.0.1",
     "ora": "^4.0.3",
     "traverse": "^0.6.6",
-    "truffle-object-mapper": "^1.2.0",
+    "truffle-object-mapper": "^1.5.0",
     "web3": "^1.2.4",
     "winston": "^3.2.1",
     "winston-transport": "^4.3.0",
     "yargs": "^15.0.2"
   },
   "devDependencies": {
-    "release-it": "^12.4.3"
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "chai-bn": "^0.2.1",
+    "mocha": "^8.0.1",
+    "release-it": "^12.4.3",
+    "run-with-testrpc": "^0.3.1",
+    "truffle": "^5.1.30"
   },
   "scripts": {
     "release": "./node_modules/.bin/release-it",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run test:lib && npm run test:cli",
+    "test:lib": "run-with-testrpc -d -m \"myth like bonus scare over problem client lizard pioneer submit female collect\" 'npm run test:build && mocha test/lib.spec.js'",
+    "test:cli": "run-with-testrpc -d -m \"myth like bonus scare over problem client lizard pioneer submit female collect\" 'npm run test:build && npm run test:cli:fixtures && mocha test/cli.spec.js'",
+    "test:cli:fixtures": "./cli.js test/playbooks -d test -i test/inputs.yml",
+    "test:build": "cd test && truffle build"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,31 @@
+{
+  "$id": "https://example.com/address.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "descripton": "Options for abi-reader",
+  "title": "ABIReader Options",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "workingDirectory": {
+      "description": "Base directory to search for truffle config and contracts",
+      "type": "string"
+    },
+    "contracts": {
+      "oneOf": [{
+        "description": "A glob pattern to where contract ABI files are stored. Defaults to: '[workingDirectory]/build/contracts/*.json'",
+        "type": "string"
+      }, {
+        "description": "An array of glob patterns pointing to where contract ABI files are stored",
+        "type": "array",
+        "items": {
+          "description": "A glob pattern to where contract ABI files are stored. Defaults to: '[workingDirectory]/build/contracts/*.json'",
+          "type": "string"
+        }
+      }, {
+        "description": "A hash of contract name and the pre-loaded ABI. Use if you don't need automatic contract detection and loading",
+        "type": "object",
+        "additionalProperties": true
+      }]
+    }
+  }
+}
