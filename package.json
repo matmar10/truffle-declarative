@@ -39,8 +39,10 @@
   },
   "scripts": {
     "release": "./node_modules/.bin/release-it",
-    "test:cli": "run-with-testrpc -d -m \"myth like bonus scare over problem client lizard pioneer submit female collect\" 'npm run test:build && npm run test:fixtures && mocha test/cli.spec.js'",
-    "test:fixtures": "./cli.js test/playbooks -d test -i test/inputs.yml",
+    "test": "npm run test:lib && npm run test:cli",
+    "test:lib": "run-with-testrpc -d -m \"myth like bonus scare over problem client lizard pioneer submit female collect\" 'npm run test:build && mocha test/lib.spec.js'",
+    "test:cli": "run-with-testrpc -d -m \"myth like bonus scare over problem client lizard pioneer submit female collect\" 'npm run test:build && npm run test:cli:fixtures && mocha test/cli.spec.js'",
+    "test:cli:fixtures": "./cli.js test/playbooks -d test -i test/inputs.yml",
     "test:build": "cd test && truffle build"
   },
   "repository": {
