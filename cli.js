@@ -139,11 +139,7 @@ yargs
         await runner.read(argv.path, state);
       } catch (err) {
         /* eslint no-console: 0 */
-        if (runner && runner.spinner) {
-          runner.spinner.error('Failed with error:');
-        } else {
-          console.error('Failed with error:', err);
-        }
+        console.error('Failed with error:', err);
         console.error(err.stack);
       }
     },
