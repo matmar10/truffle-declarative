@@ -1,4 +1,4 @@
-  'use strict';
+'use strict';
 
 /* global before, describe, it */
 const BN = require('bn.js');
@@ -21,7 +21,7 @@ describe('cli', function () {
   let inputs;
   let runner;
   let metacoin;
-  before(async function() {
+  before(async function () {
     inputs = yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'inputs.yml'), 'utf8'));
     runner = new Runner({
       workingDirectory: __dirname,
@@ -29,12 +29,12 @@ describe('cli', function () {
     metacoin = await runner.contractAt('MetaCoin', deployedAddress);
   });
 
-  it('runs deploy scripts with linking', async function() {
-    const values = await  runner.mapper.map('MetaCoin', deployedAddress);
+  it('runs deploy scripts with linking', async function () {
+    const values = await runner.mapper.map('MetaCoin', deployedAddress);
     chai.expect(values).to.have.property('name', 'Fancy MetaCoin Example');
   });
 
-  it('runs instance methods', async function() {
+  it('runs instance methods', async function () {
     const addresses = Array.from(Array(10).keys()).map(i => `address${i}`);
     await Promise.each(addresses, async (addressName) => {
       const address = inputs[addressName];

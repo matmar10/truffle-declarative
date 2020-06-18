@@ -12,7 +12,7 @@ const ScriptReader = require('./lib/script-reader');
 const defaultWorkingDirectory = path.join(__dirname, '/../../');
 
 yargs
-  .usage("$0 <path..>")
+  .usage('$0 <path..>')
   .command({
     command: '$0 <path..>',
     desc: 'Run the blockchain scripts defined by the list of files.',
@@ -26,19 +26,19 @@ yargs
           alias: 'd',
           description: 'Location of truffle project.',
           type: 'string',
-          coerce: (arg) => ScriptReader.coerceRelativePath(arg, __dirname),
-          default: defaultWorkingDirectory
+          coerce: arg => ScriptReader.coerceRelativePath(arg, __dirname),
+          default: defaultWorkingDirectory,
         },
         state: {
           description: 'Values to pass to the state which may be referenced in scripts.',
           alias: 'env',
-          type: 'string'
+          type: 'string',
         },
         networkName: {
           description: 'Network name to run transactions on. Should correspond to one defined in truffle.js',
           alias: 'n',
           type: 'string',
-          default: 'development'
+          default: 'development',
         },
         results: {
           description: 'Path to output result logs of transactions succeeded and failed. Failed tasks can be replayed later.',
@@ -48,50 +48,50 @@ yargs
         interactive: {
           description: 'Whether to prompt to confirm each step.',
           default: true,
-          type: 'boolean'
+          type: 'boolean',
         },
         input: {
           description: 'Path to a file that contains inputs.',
           alias: ['inputs', 'i'],
-          type: 'string'
+          type: 'string',
         },
         debug: {
           description: 'Write inputs and outputs to console',
-          type: 'boolean'
+          type: 'boolean',
         },
         debugInspectDepth: {
           description: 'How deep to print objects (util.inspect depth)',
           type: 'number',
           default: 5,
-          hidden: true
+          hidden: true,
         },
         delay: {
           description: 'Delay between methods',
           type: 'number',
           default: 0,
-          hidden: true
+          hidden: true,
         },
         dump: {
           description: 'Whether to dump state upon finish',
           type: 'boolean',
           default: false,
-          implies: ['dumpPath']
+          implies: ['dumpPath'],
         },
         dumpPath: {
           description: 'A list of paths that should be dumped.',
           type: 'array',
           default: ['$deployed'],
-          hidden: true
+          hidden: true,
         },
         dumpFilename: {
           description: 'Where to dump the state upon finish',
           type: 'string',
-          hidden: true
+          hidden: true,
         },
         contracts: {
           description: 'Path to location of contract arficats (ABI) JSON files',
           type: 'string',
-          hidden: true
+          hidden: true,
         },
         closeOnFinish: {
           description: 'Whether to shut down provider connections and dangling event listeners upon finish.',
@@ -103,15 +103,16 @@ yargs
           description: 'Path to a definition of a map to be used by truffle-object-mapper for calls to util.map',
           hidden: false,
           type: 'string',
-          default: 'mapping.js'
-        }
+          default: 'mapping.js',
+        },
       });
     },
     handler: async (argv) => {
+      let runner;
       try {
         argv.scriptDirectory = __dirname;
 
-        const runner = new Runner(argv);
+        runner = new Runner(argv);
 
         // ensure relative paths of input files coerced into absolute
         // using the workingDirectory
@@ -119,7 +120,7 @@ yargs
           const inputsPath = argv.inputs;
           argv.inputs = runner.scriptReader.merge(inputsPath);
           if (!Object.keys(argv.inputs).length) {
-            console.warn(`No inputs found from ${inputsPath}`);
+            runner.spinner.warn(`No inputs found from ${inputsPath}`);
           }
         }
 
@@ -131,16 +132,21 @@ yargs
         // add inputs to the initial state
         const state = merge({
           $deployed,
-          $inputs
+          $inputs,
         }, argv.state || {});
 
         // run list of script files found at specified path(s)
         await runner.read(argv.path, state);
       } catch (err) {
-        console.error('Failed with error:', err);
+        /* eslint no-console: 0 */
+        if (runner && runner.spinner) {
+          runner.spinner.error('Failed with error:');
+        } else {
+          console.error('Failed with error:', err);
+        }
         console.error(err.stack);
       }
-    }
+    },
   })
   .strict(true)
   .demandCommand()

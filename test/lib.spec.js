@@ -1,8 +1,7 @@
-  'use strict';
+'use strict';
 
 /* global before, describe, it */
 const BN = require('bn.js');
-const Promise = require('bluebird');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const chaiBN = require('chai-bn');
@@ -15,28 +14,25 @@ chai.use(chaiAsPromised);
 
 const Runner = require('./../');
 
-const deployedAddress = '0xCfEB869F69431e42cdB54A4F4f105C19C080A601';
+const contracts = require('./expected/contracts');
+const transfers = require('./expected/transfers');
+const inputs = yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'inputs.yml'), 'utf8'));
+const playbooks = [
+  yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'playbooks/0-deploy.playbook.yml'), 'utf8')),
+  yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'playbooks/1-send.playbook.yml'), 'utf8')),
+];
+const runner = new Runner({
+  workingDirectory: __dirname,
+});
 
 describe('lib', function () {
   this.timeout(10000);
-  let inputs;
-  let playbooks;
-  let runner;
-  let metacoin;
   let results;
-  before(async function() {
-    inputs = yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'inputs.yml'), 'utf8'));
-    playbooks = [
-      yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'playbooks/0-deploy.playbook.yml'), 'utf8')),
-      yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'playbooks/1-send.playbook.yml'), 'utf8')),
-    ];
-    runner = new Runner({
-      workingDirectory: __dirname,
-    });
+  before(async function () {
     results = await runner.read(playbooks, { $inputs: inputs });
   });
 
-  it('runs deploy scripts with linking', function() {
+  it('runs deploy scripts with linking', function () {
     chai.expect(results[0][0]).to.deep.include({
       address: '0xe78A0F7E598Cc8b0Bb87894B0F60dD2a88d6a8Ab',
       transactionHash: '0xfe7e5d6fc8c281606f40f70837dc136704ace71496dce852bc6d93dcce3bcb48',
@@ -53,117 +49,35 @@ describe('lib', function () {
     });
   });
 
-  it('runs instance methods', function() {
-    chai.expect(results[1]).to.deep.include([
-      { description: 'Send to address',
-        contract: 'MetaCoin',
-        at: '$deployed.metacoin',
-        run: 'sendCoin',
-        inputs:
-         [ { receiver: inputs.address1,
-             amount: 1000 },
-           { from: '$inputs.address0' } ],
-        outputs: {} },
-      { description: 'Send to address',
-        contract: 'MetaCoin',
-        at: '$deployed.metacoin',
-        run: 'sendCoin',
-        inputs:
-         [ { receiver: inputs.address2,
-             amount: 1000 },
-           { from: '$inputs.address0' } ],
-        outputs: {} },
-      { description: 'Send to address',
-        contract: 'MetaCoin',
-        at: '$deployed.metacoin',
-        run: 'sendCoin',
-        inputs:
-         [ { receiver: inputs.address3,
-             amount: 1000 },
-           { from: '$inputs.address0' } ],
-        outputs: {} },
-      { description: 'Send to address',
-        contract: 'MetaCoin',
-        at: '$deployed.metacoin',
-        run: 'sendCoin',
-        inputs:
-         [ { receiver: inputs.address4,
-             amount: 1000 },
-           { from: '$inputs.address0' } ],
-        outputs: {} },
-      { description: 'Send to address',
-        contract: 'MetaCoin',
-        at: '$deployed.metacoin',
-        run: 'sendCoin',
-        inputs:
-         [ { receiver: inputs.address5,
-             amount: 1000 },
-           { from: '$inputs.address0' } ],
-        outputs: {} },
-      { description: 'Send to address',
-        contract: 'MetaCoin',
-        at: '$deployed.metacoin',
-        run: 'sendCoin',
-        inputs:
-         [ { receiver: inputs.address6,
-             amount: 1000 },
-           { from: '$inputs.address0' } ],
-        outputs: {} },
-      { description: 'Send to address',
-        contract: 'MetaCoin',
-        at: '$deployed.metacoin',
-        run: 'sendCoin',
-        inputs:
-         [ { receiver: inputs.address7,
-             amount: 1000 },
-           { from: '$inputs.address0' } ],
-        outputs: {} },
-      { description: 'Send to address',
-        contract: 'MetaCoin',
-        at: '$deployed.metacoin',
-        run: 'sendCoin',
-        inputs:
-         [ { receiver: inputs.address8,
-             amount: 1000 },
-           { from: '$inputs.address0' } ],
-        outputs: {} },
-      { description: 'Send to address',
-        contract: 'MetaCoin',
-        at: '$deployed.metacoin',
-        run: 'sendCoin',
-        inputs:
-         [ { receiver: inputs.address9,
-             amount: 1000 },
-           { from: '$inputs.address0' } ],
-        outputs: {} }
-    ]);
+  it('runs instance methods', function () {
+    chai.expect(results[1]).to.deep.include(transfers);
   });
 
-  it('applies output mapping', async function() {
+  it('applies output mapping', async function () {
     const results = await runner.read([{
       contract: 'MetaCoin',
       run: 'getBalanceInEth',
-      at: deployedAddress,
+      at: contracts.MetaCoin,
       inputs: [{
-        holder: inputs.address5
+        holder: inputs.address5,
       }],
     }, {
       contract: 'MetaCoin',
       run: 'getBalance',
-      at: deployedAddress,
+      at: contracts.MetaCoin,
       inputs: [{
-        holder: inputs.address5
+        holder: inputs.address5,
       }],
     }]);
     await chai.expect(results[0][0]).to.be.a('string').that.equals('2000');
     await chai.expect(results[1][0]).to.be.a.bignumber.that.equals(new BN('1000'));
   });
 
-  it('applies type mapping', async function() {
+  it('applies type mapping', async function () {
     const results = await runner.read([{
       contract: 'MetaCoin',
       run: 'version',
-      at: deployedAddress,
+      at: contracts.MetaCoin,
     }]);
     await chai.expect(results[0][0]).to.be.a('string').that.equals(String(inputs.version));
   });
