@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
-const inputs = yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'inputs.yml'), 'utf8'));
+const inputs = yaml.safeLoad(fs.readFileSync(path.join(__dirname, '/../inputs.yml'), 'utf8'));
 
 module.exports = [
   {

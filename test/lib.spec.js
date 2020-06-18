@@ -81,4 +81,42 @@ describe('lib', function () {
     }]);
     await chai.expect(results[0][0]).to.be.a('string').that.equals(String(inputs.version));
   });
+
+  it('merges $inputs and $deployed', async function () {
+    await chai.expect(runner.read([{
+      contract: 'MetaCoin',
+      run: 'getBalance',
+      at: '$deployed.MetaCoin',
+      inputs: [{
+        holder: '$inputs.address5',
+      }],
+    }], {
+      address5: inputs.address5,
+      $deployed: contracts,
+    })).to.be.fulfilled;
+    await chai.expect(runner.read([{
+      contract: 'MetaCoin',
+      run: 'getBalance',
+      at: '$deployed.MetaCoin',
+      inputs: [{
+        holder: '$inputs.address5',
+      }],
+    }], {
+      $deployed: contracts,
+      $inputs: {
+        address5: inputs.address5,
+      },
+    })).to.be.fulfilled;
+    await chai.expect(runner.read([{
+      contract: 'MetaCoin',
+      run: 'getBalance',
+      at: '$deployed.MetaCoin',
+      inputs: [{
+        holder: '$inputs.address5',
+      }],
+    }], {
+      MetaCoin: contracts.MetaCoin,
+      address5: inputs.address5,
+    })).to.be.rejected;
+  });
 });
