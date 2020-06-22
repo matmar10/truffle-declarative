@@ -1,6 +1,7 @@
 'use strict';
 
-/* global before, describe, it */
+/* global describe, it */
+const Promise = require('bluebird');
 const BN = require('bn.js');
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
@@ -9,13 +10,16 @@ const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
 
+// const assertValidOptions = require('./../lib/assert-valid-options');
+// const schema = require('./../schemas/command');
+
 chai.use(chaiBN(BN));
 chai.use(chaiAsPromised);
 
 const Runner = require('./../');
 
 const contracts = require('./expected/contracts');
-const transfers = require('./expected/transfers');
+// const transfers = require('./expected/transfers');
 
 const inputs = yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'inputs.yml'), 'utf8'));
 
@@ -53,24 +57,31 @@ describe('Runner', function () {
   });
 
   it('runs playbook that includes playbook by filename', async function () {
-    const amount = 1000;
+    const amount = '1000';
     const args = {
       $deployed: {
         MetaCoin: contracts.MetaCoin.address,
       },
       $inputs: {
-        transfers: inputs.addresses.slice(1).map(address => ({
+        transfers: inputs.addresses.slice(2).map(address => ({
           address,
           amount,
         })),
         sender: inputs.addresses[0],
       },
     };
-    const results = await runner.read(path.join(__dirname, 'playbooks/1-send.playbook.yml'), args);
-    console.log(results);
-    // chai.expect(results[0][0]).to.deep.include({
-    //   tx: '0x7bb26f9524edfbaf9553b3f31fb2830131b673e5f37405a38c1ce1e5c2f60c25',
-    // });
+    await runner.read(path.join(__dirname, 'playbooks/bulk/send-multiple.playbook.yml'), args);
+    await Promise.each(inputs.addresses.slice(2), async (address, i) => {
+      const results = await runner.read([{
+        contract: 'MetaCoin',
+        run: 'getBalance',
+        at: contracts.MetaCoin.address,
+        inputs: [{
+          holder: address,
+        }],
+      }]);
+      chai.expect(results[0][0]).to.be.a.bignumber.that.equals(new BN(amount), `Address #${i}: ${address}`);
+    });
   });
 
   describe('transformations', function () {
@@ -90,7 +101,7 @@ describe('Runner', function () {
           holder: inputs.addresses[1],
         }],
       }]);
-      await chai.expect(results[0][0]).to.be.a('string').that.equals('18000');
+      await chai.expect(results[0][0]).to.be.a('string').that.equals('2000');
       await chai.expect(results[1][0]).to.be.a.bignumber.that.equals(new BN('1000'));
     });
 

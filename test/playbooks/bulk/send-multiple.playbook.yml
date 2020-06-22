@@ -5,5 +5,5 @@
   each:
     - playbook: '1-send.playbook.yml'
       inputs:
-        - receiver: $item.address
-          amount: $item.amount
+        receiver: $item.address
+        amount: $item.amount
