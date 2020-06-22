@@ -1,7 +1,7 @@
 ---
 
 - description: Deploy
-  for: $inputs.payments
+  for: $inputs.transfers
   each:
     - playbook: '1-send.playbook.yml'
       inputs:

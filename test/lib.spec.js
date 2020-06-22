@@ -52,6 +52,27 @@ describe('Runner', function () {
     });
   });
 
+  it('runs playbook that includes playbook by filename', async function () {
+    const amount = 1000;
+    const args = {
+      $deployed: {
+        MetaCoin: contracts.MetaCoin.address,
+      },
+      $inputs: {
+        transfers: inputs.addresses.slice(1).map(address => ({
+          address,
+          amount,
+        })),
+        sender: inputs.addresses[0],
+      },
+    };
+    const results = await runner.read(path.join(__dirname, 'playbooks/1-send.playbook.yml'), args);
+    console.log(results);
+    // chai.expect(results[0][0]).to.deep.include({
+    //   tx: '0x7bb26f9524edfbaf9553b3f31fb2830131b673e5f37405a38c1ce1e5c2f60c25',
+    // });
+  });
+
   describe('transformations', function () {
     it('applies output mapping', async function () {
       const results = await runner.read([{
@@ -93,20 +114,20 @@ describe('Runner', function () {
           holder: '$inputs.address',
         }],
       }], {
-        address: inputs.addresses[2],
         $deployed: contracts,
+        address: inputs.addresses[2],
       })).to.be.fulfilled;
     });
 
     it('leaves $inputs and $deployed', async function () {
-      await chai.expect(runner.read([{
+      await chai.expect(runner.read({
         contract: 'MetaCoin',
         run: 'getBalance',
         at: '$deployed.MetaCoin.address',
         inputs: [{
           holder: '$inputs.address',
         }],
-      }], {
+      }, {
         $deployed: contracts,
         $inputs: {
           address: inputs.addresses[2],

@@ -9,7 +9,6 @@ module.exports = {
     address: '0x5b1869D9A4C187F2EAa108f3062412ecf0526b24',
     transactionHash: '0x13577c27c01a67f2b3bde64f7a0913524a112fb0148a2773a93ac1c8830f1edf',
   },
-
   MetaCoin: {
     address: '0xCfEB869F69431e42cdB54A4F4f105C19C080A601',
     transactionHash: '0xca05a744bf8515a1618936dc689a988c22e6f056af6289d7e6f2934024f65ecb',
