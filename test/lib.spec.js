@@ -18,8 +18,7 @@ const contracts = require('./expected/contracts');
 const transfers = require('./expected/transfers');
 const inputs = yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'inputs.yml'), 'utf8'));
 const playbooks = [
-  yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'playbooks/0-deploy.playbook.yml'), 'utf8')),
-  yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'playbooks/1-send.playbook.yml'), 'utf8')),
+  yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'playbooks/*.playbook.yml'), 'utf8')),
 ];
 const runner = new Runner({
   workingDirectory: __dirname,
