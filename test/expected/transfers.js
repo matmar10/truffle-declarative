@@ -13,10 +13,10 @@ module.exports = [
     run: 'sendCoin',
     inputs:
      [{
-       receiver: inputs.address1,
+       receiver: inputs.addresses[1],
        amount: 1000,
      },
-     { from: '$inputs.address0' }],
+     { from: '$inputs.addresses[0]' }],
     outputs: {},
   },
   {
@@ -26,10 +26,10 @@ module.exports = [
     run: 'sendCoin',
     inputs:
      [{
-       receiver: inputs.address2,
+       receiver: inputs.addresses[2],
        amount: 1000,
      },
-     { from: '$inputs.address0' }],
+     { from: '$inputs.addresses[0]' }],
     outputs: {},
   },
   {
@@ -39,10 +39,10 @@ module.exports = [
     run: 'sendCoin',
     inputs:
      [{
-       receiver: inputs.address3,
+       receiver: inputs.addresses[3],
        amount: 1000,
      },
-     { from: '$inputs.address0' }],
+     { from: '$inputs.addresses[0]' }],
     outputs: {},
   },
   {
@@ -52,10 +52,10 @@ module.exports = [
     run: 'sendCoin',
     inputs:
      [{
-       receiver: inputs.address4,
+       receiver: inputs.addresses[4],
        amount: 1000,
      },
-     { from: '$inputs.address0' }],
+     { from: '$inputs.addresses[0]' }],
     outputs: {},
   },
   {
@@ -65,10 +65,10 @@ module.exports = [
     run: 'sendCoin',
     inputs:
      [{
-       receiver: inputs.address5,
+       receiver: inputs.addresses[5],
        amount: 1000,
      },
-     { from: '$inputs.address0' }],
+     { from: '$inputs.addresses[0]' }],
     outputs: {},
   },
   {
@@ -78,10 +78,10 @@ module.exports = [
     run: 'sendCoin',
     inputs:
      [{
-       receiver: inputs.address6,
+       receiver: inputs.addresses[6],
        amount: 1000,
      },
-     { from: '$inputs.address0' }],
+     { from: '$inputs.addresses[0]' }],
     outputs: {},
   },
   {
@@ -91,10 +91,10 @@ module.exports = [
     run: 'sendCoin',
     inputs:
      [{
-       receiver: inputs.address7,
+       receiver: inputs.addresses[7],
        amount: 1000,
      },
-     { from: '$inputs.address0' }],
+     { from: '$inputs.addresses[0]' }],
     outputs: {},
   },
   {
@@ -104,10 +104,10 @@ module.exports = [
     run: 'sendCoin',
     inputs:
      [{
-       receiver: inputs.address8,
+       receiver: inputs.addresses[8],
        amount: 1000,
      },
-     { from: '$inputs.address0' }],
+     { from: '$inputs.addresses[0]' }],
     outputs: {},
   },
   {
@@ -117,10 +117,10 @@ module.exports = [
     run: 'sendCoin',
     inputs:
      [{
-       receiver: inputs.address9,
+       receiver: inputs.addresses[9],
        amount: 1000,
      },
-     { from: '$inputs.address0' }],
+     { from: '$inputs.addresses[0]' }],
     outputs: {},
   },
 ];
