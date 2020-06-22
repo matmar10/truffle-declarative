@@ -1,0 +1,9 @@
+---
+
+- description: Deploy
+  for: $inputs.transfers
+  each:
+    - playbook: '1-send.playbook.yml'
+      inputs:
+        receiver: $item.address
+        amount: $item.amount

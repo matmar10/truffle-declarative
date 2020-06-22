@@ -14,8 +14,7 @@ chai.use(chaiBN(BN));
 chai.use(chaiAsPromised);
 
 const Runner = require('./../');
-
-const deployedAddress = '0xCfEB869F69431e42cdB54A4F4f105C19C080A601';
+const contracts = require('./expected/contracts');
 
 describe('cli', function () {
   let inputs;
@@ -26,11 +25,11 @@ describe('cli', function () {
     runner = new Runner({
       workingDirectory: __dirname,
     });
-    metacoin = await runner.contractAt('MetaCoin', deployedAddress);
+    metacoin = await runner.contractAt('MetaCoin', contracts.MetaCoin.address);
   });
 
   it('runs deploy scripts with linking', async function () {
-    const values = await runner.mapper.map('MetaCoin', deployedAddress);
+    const values = await runner.mapper.map('MetaCoin', contracts.MetaCoin.address);
     chai.expect(values).to.have.property('name', 'Fancy MetaCoin Example');
   });
 

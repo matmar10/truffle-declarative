@@ -3,9 +3,9 @@
   contract: Migrations
   run: new
   inputs:
-    - from: $inputs.address0
+    - from: $inputs.addresses[0]
   outputs:
-    address: $deployed.migrations
+    address: $deployed.Migrations
 
 - description: Link MetaCoin to Migrations
   contract: MetaCoin
@@ -17,9 +17,9 @@
   contract: ConvertLib
   run: new
   inputs:
-    - from: $inputs.address0
+    - from: $inputs.addresses[0]
   outputs:
-    address: $deployed.convertLib
+    address: $deployed.ConvertLib
 
 - description: Link MetaCoin to ConvertLib
   contract: MetaCoin
@@ -34,6 +34,6 @@
     - name: $inputs.name
       balance: $inputs.balance
       version: $inputs.version
-    - from: $inputs.address0
+    - from: $inputs.addresses[0]
   outputs:
-    address: $deployed.metacoin
+    address: $deployed.MetaCoin
